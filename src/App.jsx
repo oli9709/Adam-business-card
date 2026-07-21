@@ -6,6 +6,7 @@ import {
   ExternalLink,
   MapPin,
   Camera,
+  Star,
 } from "lucide-react";
 import { useProfile } from "./data";
 import { downloadVCard } from "./utils/vcard";
@@ -53,6 +54,7 @@ const ICON_MAP = {
   globe: Globe,
   instagram: InstagramIcon,
   tiktok: TikTokIcon,
+  star: Star,
 };
 
 /* ════════════════════════════════════════════════
@@ -68,8 +70,14 @@ export default function App() {
 
   return (
     <div className="relative min-h-dvh flex flex-col items-center">
-      {/* ── Background ── */}
-      <div className="fixed inset-0 -z-10 bg-[#020617] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))]">
+      {/* ── Background (Ultra Premium Dark) ── */}
+      <div className="fixed inset-0 -z-10 bg-[#05050a] overflow-hidden">
+        {/* Subtle noise texture */}
+        <div className="absolute inset-0 opacity-[0.015] mix-blend-overlay pointer-events-none" style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }}></div>
+        {/* Animated glowing orbs */}
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-ocean-500/10 rounded-full blur-[100px] animate-blob1" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px] animate-blob2" />
+        <div className="absolute top-[40%] left-[20%] w-[300px] h-[300px] bg-teal-500/5 rounded-full blur-[80px] animate-blob1" style={{ animationDelay: '2s' }} />
       </div>
 
       {/* ── Content wrapper (mobile-centric) ── */}

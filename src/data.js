@@ -54,6 +54,13 @@ const PROFILES = {
         url: "https://www.tiktok.com/@chilltours_busan?_t=ZS-8wtxduMO4Cv&_r=1",
         gradient: "from-cyan-400 to-teal-500",
       },
+      {
+        key: "review",
+        icon: "star",
+        label: "Give us review 😍",
+        url: "https://g.page/r/CaiW7oKUP1MKEBM/review",
+        gradient: "from-gold-400 to-amber-500",
+      },
     ],
   },
 

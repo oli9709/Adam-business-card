@@ -39,27 +39,47 @@ body {
 
 /* ── Glassmorphism utility classes ── */
 .glass {
-  background: rgba(20, 25, 40, 0.4);
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  background: rgba(15, 15, 20, 0.3);
+  backdrop-filter: blur(28px) saturate(1.5);
+  -webkit-backdrop-filter: blur(28px) saturate(1.5);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
 }
 
 .glass-strong {
-  background: rgba(20, 25, 40, 0.6);
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  background: rgba(15, 15, 20, 0.45);
+  backdrop-filter: blur(40px) saturate(1.8);
+  -webkit-backdrop-filter: blur(40px) saturate(1.8);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+/* ── Animated Background Orbs ── */
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-30px, 30px) scale(1.1); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -30px) scale(1.05); }
+}
+.animate-blob1 {
+  animation: float1 15s ease-in-out infinite;
+}
+.animate-blob2 {
+  animation: float2 18s ease-in-out infinite alternate;
 }
 
 /* ── Profile image glow ring ── */
 .profile-ring {
   box-shadow:
-    0 0 0 4px rgba(51, 139, 255, 0.3),
-    0 0 30px rgba(51, 139, 255, 0.15),
-    0 8px 32px rgba(0, 0, 0, 0.3);
+    0 0 0 3px rgba(51, 139, 255, 0.15),
+    0 0 20px rgba(51, 139, 255, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.8);
 }
 
 /* ── Staggered fade-in animation ── */
