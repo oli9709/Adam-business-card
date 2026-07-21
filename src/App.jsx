@@ -64,7 +64,7 @@ const ICON_MAP = {
 
 export default function App() {
   const profile = useProfile();
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   // Toggle theme logic
   useEffect(() => {
