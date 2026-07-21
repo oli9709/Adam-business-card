@@ -50,11 +50,28 @@ function TikTokIcon({ size = 20, className = "" }) {
   );
 }
 
+/* ── Telegram SVG icon ── */
+function TelegramIcon({ size = 20, className = "" }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.33-.01-.97-.19-1.44-.34-.58-.19-1.04-.29-1.01-.61.02-.17.26-.35.73-.54 2.84-1.24 4.73-2.05 5.67-2.44 2.7-1.12 3.26-1.31 3.63-1.31.08 0 .26.02.38.1.1.07.16.17.18.27.01.06.01.16 0 .2z" />
+    </svg>
+  );
+}
+
 /* ── Icon resolver ── */
 const ICON_MAP = {
   globe: Globe,
   instagram: InstagramIcon,
   tiktok: TikTokIcon,
+  telegram: TelegramIcon,
   star: Star,
 };
 
@@ -96,26 +113,55 @@ export default function App() {
         </div>
 
         {/* ─── HERO PROFILE ─── */}
-        <section className="flex flex-col items-center mb-10 text-center">
-          {/* Avatar */}
-          <div className="mb-6">
+        <section className="relative flex flex-col items-center mb-10 text-center mt-6">
+          
+          {/* Avatar Container with Radiating Pattern */}
+          <div className="relative mb-6 flex justify-center items-center w-full">
+            
+            {/* Animated Light Pattern (Only in Light Mode) */}
+            {!isDark && (
+              <div className="absolute inset-0 flex justify-center items-center pointer-events-none z-0">
+                {/* Pulsing rings */}
+                <div className="absolute w-40 h-40 rounded-full border border-neutral-300 animate-pulse-ring"></div>
+                <div className="absolute w-48 h-48 rounded-full border border-neutral-200 animate-pulse-ring" style={{ animationDelay: '1s' }}></div>
+                
+                {/* Spinning ornamental mandala/sun pattern */}
+                <svg 
+                  viewBox="0 0 100 100" 
+                  className="absolute w-56 h-56 text-neutral-200/80 animate-spin-slow"
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="0.5"
+                >
+                  {/* Geometric overlapping petals */}
+                  <path d="M50 10 Q60 50 50 90 Q40 50 50 10" />
+                  <path d="M10 50 Q50 60 90 50 Q50 40 10 50" />
+                  <path d="M22 22 Q50 50 78 78" strokeWidth="1" />
+                  <path d="M22 78 Q50 50 78 22" strokeWidth="1" />
+                  <circle cx="50" cy="50" r="30" strokeDasharray="2 4" />
+                  <circle cx="50" cy="50" r="42" strokeWidth="0.2" />
+                </svg>
+              </div>
+            )}
+
+            {/* Avatar Image */}
             <img
               src={profile.profilePicture}
               alt={`${profile.fullName} Profile`}
-              className="w-24 h-24 rounded-full object-cover shadow-sm ring-1 ring-neutral-200 dark:ring-neutral-800"
+              className="w-24 h-24 rounded-full object-cover shadow-md ring-[6px] ring-[#FAF9F6] dark:ring-[#0A0A0A] relative z-10"
             />
           </div>
 
           {/* Name & Title */}
-          <h1 className="text-4xl font-serif tracking-tight text-neutral-900 dark:text-white mb-2">
+          <h1 className="text-4xl font-serif tracking-tight text-neutral-900 dark:text-white mb-2 relative z-20">
             {profile.fullName}
           </h1>
-          <p className="text-[13px] uppercase tracking-[0.15em] text-neutral-500 dark:text-neutral-400 font-medium mb-6">
+          <p className="text-[13px] uppercase tracking-[0.15em] text-neutral-500 dark:text-neutral-400 font-medium mb-6 relative z-20">
             {profile.jobTitle}
           </p>
 
           {/* Bio */}
-          <p className="text-[15px] leading-relaxed text-neutral-600 dark:text-neutral-300 max-w-[340px]">
+          <p className="text-[15px] leading-relaxed text-neutral-600 dark:text-neutral-300 max-w-[340px] relative z-20">
             {profile.bio}
           </p>
         </section>

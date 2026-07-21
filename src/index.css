@@ -46,3 +46,24 @@ body {
   display: none;
 }
 
+/* ── Radiating Pattern Animations ── */
+@keyframes spinSlow {
+  from { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.05); }
+  to { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes pulseRing {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { opacity: 0.15; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 20s linear infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulseRing 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+

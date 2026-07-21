@@ -48,6 +48,13 @@ const PROFILES = {
         gradient: "from-amber-400 to-pink-500",
       },
       {
+        key: "telegram",
+        icon: "telegram",
+        label: "@MardanovOtabek",
+        url: "https://t.me/MardanovOtabek",
+        gradient: "from-blue-400 to-blue-600",
+      },
+      {
         key: "tiktok",
         icon: "tiktok",
         label: "TikTok",
