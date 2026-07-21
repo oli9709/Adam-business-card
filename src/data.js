@@ -50,7 +50,7 @@ const PROFILES = {
       {
         key: "telegram",
         icon: "telegram",
-        label: "@MardanovOtabek",
+        label: "Telegram",
         url: "https://t.me/MardanovOtabek",
         gradient: "from-blue-400 to-blue-600",
       },
