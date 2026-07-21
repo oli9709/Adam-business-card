@@ -1,12 +1,13 @@
+import { useState, useEffect } from "react";
 import {
   Phone,
   MessageCircle,
   UserPlus,
   Globe,
   ExternalLink,
-  MapPin,
-  Camera,
   Star,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { useProfile } from "./data";
 import { downloadVCard } from "./utils/vcard";
@@ -21,7 +22,7 @@ function InstagramIcon({ size = 20, className = "" }) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
@@ -63,6 +64,16 @@ const ICON_MAP = {
 
 export default function App() {
   const profile = useProfile();
+  const [isDark, setIsDark] = useState(false);
+
+  // Toggle theme logic
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDark]);
 
   const whatsappMsg = encodeURIComponent(
     `Hello ${profile.fullName}! I'm interested in a tour with Chillbusan Tours.`
@@ -70,116 +81,74 @@ export default function App() {
 
   return (
     <div className="relative min-h-dvh flex flex-col items-center">
-      {/* ── Background (Ultra Premium Dark) ── */}
-      <div className="fixed inset-0 -z-10 bg-[#05050a] overflow-hidden">
-        {/* Subtle noise texture */}
-        <div className="absolute inset-0 opacity-[0.015] mix-blend-overlay pointer-events-none" style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }}></div>
-        {/* Animated glowing orbs */}
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-ocean-500/10 rounded-full blur-[100px] animate-blob1" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px] animate-blob2" />
-        <div className="absolute top-[40%] left-[20%] w-[300px] h-[300px] bg-teal-500/5 rounded-full blur-[80px] animate-blob1" style={{ animationDelay: '2s' }} />
-      </div>
-
       {/* ── Content wrapper (mobile-centric) ── */}
-      <main className="w-full max-w-[430px] px-5 pb-12 pt-10 flex flex-col items-center gap-7">
+      <main className="w-full max-w-[480px] px-6 pb-16 pt-8 flex flex-col">
+        
+        {/* ── Theme Toggle ── */}
+        <div className="flex justify-end mb-6">
+          <button
+            onClick={() => setIsDark(!isDark)}
+            className="p-2 rounded-full hover:bg-neutral-200/50 dark:hover:bg-neutral-800 transition-colors text-neutral-500 dark:text-neutral-400"
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </div>
 
-        {/* ─── HEADER / BRANDING ─── */}
-        <header
-          className="animate-fade-up flex flex-col items-center gap-1.5"
-          style={{ animationDelay: "0s" }}
-        >
-          <div className="flex items-center gap-2">
-            <MapPin size={14} className="text-ocean-400" />
-            <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-ocean-300/70">
-              Busan, South Korea
-            </span>
-          </div>
-          <h1 className="text-[26px] font-extrabold tracking-tight bg-gradient-to-r from-ocean-200 via-teal-400 to-gold-400 bg-clip-text text-transparent">
-            Chillbusan Tours
-          </h1>
-        </header>
-
-        {/* ─── HERO PROFILE CARD ─── */}
-        <section
-          className="animate-fade-up glass-strong rounded-3xl w-full p-7 flex flex-col items-center gap-5"
-          style={{ animationDelay: "0.1s" }}
-        >
+        {/* ─── HERO PROFILE ─── */}
+        <section className="flex flex-col items-center mb-10 text-center">
           {/* Avatar */}
-          <div className="profile-ring rounded-full p-1">
+          <div className="mb-6">
             <img
               src={profile.profilePicture}
-              alt={`${profile.fullName} — Chillbusan Tours`}
-              className="w-28 h-28 rounded-full object-cover"
+              alt={`${profile.fullName} Profile`}
+              className="w-24 h-24 rounded-full object-cover shadow-sm ring-1 ring-neutral-200 dark:ring-neutral-800"
             />
           </div>
 
           {/* Name & Title */}
-          <div className="text-center">
-            <h2 className="text-[22px] font-bold tracking-tight">{profile.fullName}</h2>
-            <p className="text-sm font-medium text-ocean-300 mt-1">
-              {profile.jobTitle}
-            </p>
-          </div>
+          <h1 className="text-4xl font-serif tracking-tight text-neutral-900 dark:text-white mb-2">
+            {profile.fullName}
+          </h1>
+          <p className="text-[13px] uppercase tracking-[0.15em] text-neutral-500 dark:text-neutral-400 font-medium mb-6">
+            {profile.jobTitle}
+          </p>
 
           {/* Bio */}
-          <p className="text-center text-[13px] leading-relaxed text-white/60 max-w-[300px]">
+          <p className="text-[15px] leading-relaxed text-neutral-600 dark:text-neutral-300 max-w-[340px]">
             {profile.bio}
           </p>
         </section>
 
         {/* ─── QUICK ACTIONS ─── */}
-        <section
-          className="animate-fade-up w-full grid grid-cols-3 gap-3"
-          style={{ animationDelay: "0.2s" }}
-        >
-          {/* Call Me */}
+        <section className="grid grid-cols-3 gap-3 mb-12">
           <a
             href={`tel:${profile.phone}`}
-            id="action-call"
-            className="tap-scale action-glow glass rounded-2xl flex flex-col items-center justify-center gap-2.5 py-5 hover:bg-white/10 transition-colors"
+            className="btn-primary"
           >
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-500/20">
-              <Phone size={20} className="text-white" />
-            </div>
-            <span className="text-[11px] font-semibold tracking-wide">Call Me</span>
+            <Phone size={16} />
+            <span>Call</span>
           </a>
-
-          {/* WhatsApp */}
           <a
             href={`https://wa.me/${profile.whatsapp}?text=${whatsappMsg}`}
             target="_blank"
             rel="noopener noreferrer"
-            id="action-whatsapp"
-            className="tap-scale action-glow glass rounded-2xl flex flex-col items-center justify-center gap-2.5 py-5 hover:bg-white/10 transition-colors"
+            className="btn-primary"
           >
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center shadow-lg shadow-teal-500/20">
-              <MessageCircle size={20} className="text-white" />
-            </div>
-            <span className="text-[11px] font-semibold tracking-wide">WhatsApp</span>
+            <MessageCircle size={16} />
+            <span>Message</span>
           </a>
-
-          {/* Save Contact */}
           <button
             onClick={() => downloadVCard(profile)}
-            id="action-save-contact"
-            className="tap-scale action-glow glass rounded-2xl flex flex-col items-center justify-center gap-2.5 py-5 hover:bg-white/10 transition-colors cursor-pointer"
+            className="btn-primary"
           >
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-ocean-400 to-ocean-600 flex items-center justify-center shadow-lg shadow-ocean-500/20">
-              <UserPlus size={20} className="text-white" />
-            </div>
-            <span className="text-[11px] font-semibold tracking-wide">Save Contact</span>
+            <UserPlus size={16} />
+            <span>Save</span>
           </button>
         </section>
 
-        {/* ─── CONNECT WITH US — LINK HUB ─── */}
-        <section
-          className="animate-fade-up w-full flex flex-col gap-3"
-          style={{ animationDelay: "0.35s" }}
-        >
-          <h3 className="text-[11px] font-semibold tracking-[0.2em] uppercase text-white/35 px-1 mb-0.5">
-            Connect with us
-          </h3>
-
+        {/* ─── LINKS (CONNECT) ─── */}
+        <section className="flex flex-col">
           {profile.links.map((link) => {
             const Icon = ICON_MAP[link.icon] || Globe;
 
@@ -189,35 +158,25 @@ export default function App() {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                id={`link-${link.key}`}
-                className="link-card tap-scale glass rounded-2xl flex items-center gap-4 px-5 py-4 hover:bg-white/10 transition-colors group"
+                className="list-item-minimal group"
               >
-                <div
-                  className={`w-10 h-10 rounded-xl bg-gradient-to-br ${link.gradient} flex items-center justify-center shadow-md flex-shrink-0`}
-                >
-                  <Icon size={20} className="text-white" />
+                <div className="text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors">
+                  <Icon size={20} strokeWidth={1.5} />
                 </div>
-                <span className="font-semibold text-sm flex-1">
+                
+                <span className="font-serif text-[17px] text-neutral-800 dark:text-neutral-200 group-hover:text-neutral-900 dark:group-hover:text-white flex-1 transition-colors">
                   {link.label}
                 </span>
+
                 <ExternalLink
-                  size={15}
-                  className="text-white/25 group-hover:text-white/60 transition-colors flex-shrink-0"
+                  size={16}
+                  strokeWidth={1.5}
+                  className="text-neutral-300 dark:text-neutral-700 group-hover:text-neutral-400 dark:group-hover:text-neutral-500 transition-colors"
                 />
               </a>
             );
           })}
         </section>
-
-        {/* ─── FOOTER ─── */}
-        <footer
-          className="animate-fade-up text-center mt-6"
-          style={{ animationDelay: "0.5s" }}
-        >
-          <p className="text-[10px] text-white/20 tracking-wide">
-            © {new Date().getFullYear()} Chillbusan Tours · All rights reserved
-          </p>
-        </footer>
       </main>
     </div>
   );
